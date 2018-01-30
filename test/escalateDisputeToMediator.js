@@ -7,10 +7,6 @@ contract("InkProtocol", (accounts) => {
   let seller = accounts[2]
   let unknown = accounts[accounts.length - 1]
 
-  beforeEach(async () => {
-    protocol = await InkProtocol.new()
-  })
-
   describe("#escalateDisputeToMediator()", () => {
     it("fails for buyer", async () => {
       let {
@@ -86,11 +82,8 @@ contract("InkProtocol", (accounts) => {
       })
 
       let tx = await protocol.escalateDisputeToMediator(transaction.id, { from: seller })
-      transaction = await $util.getTransaction(transaction.id, protocol)
-
-      assert.equal(transaction.state, $util.states.Escalated)
-
       let eventArgs = $util.eventFromTx(tx, $util.events.TransactionEscalated).args
+
       assert.equal(eventArgs.id.toNumber(), transaction.id)
     })
   })
