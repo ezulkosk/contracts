@@ -87,9 +87,26 @@ contract("InkProtocol", (accounts) => {
     })
 
     it("transfers tokens from escrow back to the buyer (and only buyer)", async () => {
+      let amount = 100
+      let {
+        protocol,
+        transaction
+      } = await $util.buildTransaction(buyer, seller, { amount })
 
+      assert.equal(await $util.getBalance(buyer, protocol), 0)
+      let tx = await protocol.revokeTransaction(transaction.id, { from: buyer })
+
+      assert.equal(await $util.getBalance(buyer, protocol), amount)
     })
 
-    it("fails when approveTransaction is called afterwards")
+    it("fails when acceptTransaction is called afterwards", async () => {
+      let {
+        protocol,
+        transaction
+      } = await $util.buildTransaction(buyer, seller)
+
+      await protocol.acceptTransaction(transaction.id, { from: seller })
+      await $util.assertVMExceptionAsync(protocol.revokeTransaction(transaction.id, { from: buyer }))
+    })
   })
 })
