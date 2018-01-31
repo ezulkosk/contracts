@@ -19,7 +19,7 @@ contract("InkProtocol", (accounts) => {
     it("succeeds when recipient is another address", async () => {
       let amount = 10;
       await protocol.transfer(sender, 20)
-      senderBalance = await $util.getBalance(sender, protocol)
+      let senderBalance = await $util.getBalance(sender, protocol)
 
       await protocol.approve(agent, amount, { from: sender })
       await protocol.transferFrom(sender, recipient, amount, { from: agent })
