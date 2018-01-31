@@ -81,9 +81,9 @@ contract("InkProtocol", (accounts) => {
       })
 
       let tx = await protocol.escalateDisputeToMediator(transaction.id, { from: seller })
-      let events = $util.eventsFromTx(tx, $util.events.TransactionEscalated)
+      let eventArgs = $util.eventFromTx(tx, $util.events.TransactionEscalated).args
 
-      assert.equal(events.length, 1)
+      assert.equal(eventArgs.id, transaction.id)
     })
   })
 })
