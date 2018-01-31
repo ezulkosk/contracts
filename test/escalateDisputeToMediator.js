@@ -2,7 +2,6 @@ const $util = require("./util")
 const InkProtocol = artifacts.require("./mocks/InkProtocolMock.sol")
 
 contract("InkProtocol", (accounts) => {
-  let protocol
   let buyer = accounts[1]
   let seller = accounts[2]
   let unknown = accounts[accounts.length - 1]
@@ -82,9 +81,9 @@ contract("InkProtocol", (accounts) => {
       })
 
       let tx = await protocol.escalateDisputeToMediator(transaction.id, { from: seller })
-      let eventArgs = $util.eventFromTx(tx, $util.events.TransactionEscalated).args
+      let events = $util.eventsFromTx(tx, $util.events.TransactionEscalated)
 
-      assert.equal(eventArgs.id.toNumber(), transaction.id)
+      assert.equal(events.length, 1)
     })
   })
 })
