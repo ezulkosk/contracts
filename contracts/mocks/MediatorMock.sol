@@ -67,14 +67,6 @@ contract MediatorMock is InkMediator {
     raiseError = _raiseError;
   }
 
-  function setSettleTransactionByMediatorFeeResponseForBuyer(uint256 _response) external {
-    settleTransactionByMediatorFeeResponseForBuyer = _response;
-  }
-
-  function setSettleTransactionByMediatorFeeResponseForSeller(uint256 _response) external {
-    settleTransactionByMediatorFeeResponseForSeller = _response;
-  }
-
   function setMediationExpiryResponse(uint32 _response) external {
     mediationExpiryResponse = _response;
   }
