@@ -81,9 +81,9 @@ contract("InkProtocol", (accounts) => {
       } = await $util.buildTransaction(buyer, seller)
 
       let tx = await protocol.revokeTransaction(transaction.id, { from: buyer })
-      let events = $util.eventsFromTx(tx, $util.events.TransactionRevoked)
+      let eventArgs = $util.eventFromTx(tx, $util.events.TransactionRevoked).args
 
-      assert.equal(events.length, 1)
+      assert.equal(eventArgs.id, transaction.id)
     })
 
     it("transfers tokens from escrow back to the buyer (and only buyer)", async () => {
@@ -93,9 +93,12 @@ contract("InkProtocol", (accounts) => {
         transaction
       } = await $util.buildTransaction(buyer, seller, { amount })
 
+      assert.equal(await $util.getBalance(protocol.address, protocol), amount)
       assert.equal(await $util.getBalance(buyer, protocol), 0)
+
       let tx = await protocol.revokeTransaction(transaction.id, { from: buyer })
 
+      assert.equal(await $util.getBalance(protocol.address, protocol), 0)
       assert.equal(await $util.getBalance(buyer, protocol), amount)
     })
 
