@@ -20,7 +20,6 @@ contract("InkProtocol", (accounts) => {
       let amount = 10;
       await protocol.transfer(sender, 20)
       senderBalance = await $util.getBalance(sender, protocol)
-      assert.equal(await $util.getBalance(sender, protocol), 20)
 
       await protocol.approve(agent, amount, { from: sender })
       await protocol.transferFrom(sender, recipient, amount, { from: agent })
