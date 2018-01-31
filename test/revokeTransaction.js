@@ -2,9 +2,15 @@ const $util = require("./util")
 const InkProtocol = artifacts.require("./mocks/InkProtocolMock.sol")
 
 contract("InkProtocol", (accounts) => {
-  let buyer = accounts[1]
-  let seller = accounts[2]
-  let unknown = accounts[accounts.length - 1]
+  let buyer,
+      seller,
+      uknown
+
+  beforeEach(() => {
+    buyer = accounts[1]
+    seller = accounts[2]
+    unknown = accounts[accounts.length - 1]
+  })
 
   describe("#revokeTransaction()", () => {
     it("fails for seller", async () => {
@@ -60,18 +66,7 @@ contract("InkProtocol", (accounts) => {
     it("fails when transaction does not exist", async () => {
       let protocol = await InkProtocol.new()
 
-      await $util.assertVMExceptionAsync(protocol.revokeTransaction(0))
-    })
-
-    it("fails when transaction is not Initiated state", async () => {
-      let {
-        protocol,
-        transaction
-      } = await $util.buildTransaction(buyer, seller, {
-        finalState: $util.states.Accepted
-      })
-
-      await $util.assertVMExceptionAsync(protocol.revokeTransaction(transaction.id, { from: buyer }))
+      await $util.assertVMExceptionAsync(protocol.revokeTransaction(0, { from: buyer }))
     })
 
     it("emits the TransactionRevoked event", async () => {
@@ -87,19 +82,22 @@ contract("InkProtocol", (accounts) => {
     })
 
     it("transfers tokens from escrow back to the buyer (and only buyer)", async () => {
-      let amount = 100
+      let transactionAmount = 75
+
       let {
         protocol,
+        mediator,
         transaction
-      } = await $util.buildTransaction(buyer, seller, { amount })
+      } = await $util.buildTransaction(buyer, seller, {
+        amount: transactionAmount
+      })
 
-      assert.equal(await $util.getBalance(protocol.address, protocol), amount)
-      assert.equal(await $util.getBalance(buyer, protocol), 0)
-
-      let tx = await protocol.revokeTransaction(transaction.id, { from: buyer })
+      await protocol.revokeTransaction(transaction.id, { from: buyer })
 
       assert.equal(await $util.getBalance(protocol.address, protocol), 0)
-      assert.equal(await $util.getBalance(buyer, protocol), amount)
+      assert.equal(await $util.getBalance(mediator.address, protocol), 0)
+      assert.equal(await $util.getBalance(seller, protocol), 0)
+      assert.equal(await $util.getBalance(buyer, protocol), transactionAmount)
     })
 
     it("fails when acceptTransaction is called afterwards", async () => {
@@ -108,8 +106,9 @@ contract("InkProtocol", (accounts) => {
         transaction
       } = await $util.buildTransaction(buyer, seller)
 
-      await protocol.acceptTransaction(transaction.id, { from: seller })
-      await $util.assertVMExceptionAsync(protocol.revokeTransaction(transaction.id, { from: buyer }))
+      await protocol.revokeTransaction(transaction.id, { from: buyer })
+
+      await $util.assertVMExceptionAsync(protocol.acceptTransaction(transaction.id, { from: seller }))
     })
   })
 })
