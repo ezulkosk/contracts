@@ -122,7 +122,6 @@ contract("InkProtocol", (accounts) => {
 
       await mediator.setSettleTransactionByMediatorFeeResponseForBuyer(buyerAmount + 1)
       await $util.assertVMExceptionAsync(mediator.settleTransaction(protocol.address, transaction.id, buyerAmount, sellerAmount))
-      await mediator.setSettleTransactionByMediatorFeeResponseForBuyer(0)
     })
 
     it("fails when mediator returns a seller's fee that is greater than seller's amount", async () => {
@@ -136,8 +135,6 @@ contract("InkProtocol", (accounts) => {
 
       await mediator.setSettleTransactionByMediatorFeeResponseForSeller(sellerAmount + 1)
       await $util.assertVMExceptionAsync(mediator.settleTransaction(protocol.address, transaction.id, buyerAmount, sellerAmount))
-
-      await mediator.setSettleTransactionByMediatorFeeResponseForSeller(0)
     })
 
     it("passes the buyer's and seller's amount to the mediator", async () => {
@@ -175,9 +172,6 @@ contract("InkProtocol", (accounts) => {
       await mediator.settleTransaction(protocol.address, transaction.id, buyerAmount, sellerAmount)
 
       assert.equal((await protocol.balanceOf.call(mediator.address)).toNumber(), buyerAmountFee + sellerAmountFee)
-
-      await mediator.setSettleTransactionByMediatorFeeResponseForBuyer(0)
-      await mediator.setSettleTransactionByMediatorFeeResponseForSeller(0)
     })
 
     it("transfers the tokens to the seller", async () => {
@@ -194,8 +188,6 @@ contract("InkProtocol", (accounts) => {
       await mediator.settleTransaction(protocol.address, transaction.id, buyerAmount, sellerAmount)
 
       assert.equal((await protocol.balanceOf.call(seller)).toNumber(), sellerAmount - sellerAmountFee)
-
-      await mediator.setSettleTransactionByMediatorFeeResponseForSeller(0)
     })
 
     it("transfers the tokens to the buyer", async () => {
@@ -212,8 +204,6 @@ contract("InkProtocol", (accounts) => {
       await mediator.settleTransaction(protocol.address, transaction.id, buyerAmount, sellerAmount)
 
       assert.equal((await protocol.balanceOf.call(buyer)).toNumber(), buyerAmount - buyerAmountFee)
-
-      await mediator.setSettleTransactionByMediatorFeeResponseForBuyer(0)
     })
 
     it("emits the TransactionSettledByMediator event", async () => {
