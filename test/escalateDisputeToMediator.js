@@ -2,9 +2,15 @@ const $util = require("./util")
 const InkProtocol = artifacts.require("./mocks/InkProtocolMock.sol")
 
 contract("InkProtocol", (accounts) => {
-  let buyer = accounts[1]
-  let seller = accounts[2]
-  let unknown = accounts[accounts.length - 1]
+  let buyer,
+      seller,
+      unknown
+
+  beforeEach(() => {
+    buyer = accounts[1]
+    seller = accounts[2]
+    unknown = accounts[accounts.length - 1]
+  })
 
   describe("#escalateDisputeToMediator()", () => {
     it("fails for buyer", async () => {
@@ -69,7 +75,7 @@ contract("InkProtocol", (accounts) => {
     it("fails when transaction does not exist", async () => {
       protocol = await InkProtocol.new()
 
-      await $util.assertVMExceptionAsync(protocol.escalateDisputeToMediator(0))
+      await $util.assertVMExceptionAsync(protocol.escalateDisputeToMediator(0, { from: seller }))
     })
 
     it("emits the TransactionEscalated event", async () => {
