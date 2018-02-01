@@ -1,8 +1,8 @@
 pragma solidity ^0.4.11;
 
-import '../InkProtocol.sol';
+import '../InkProtocolCore.sol';
 
-contract InkProtocolMock is InkProtocol {
+contract InkProtocolMock is InkProtocolCore {
   function InkProtocolMock() public {
     balances[msg.sender] = totalSupply_;
   }

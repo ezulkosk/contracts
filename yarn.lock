@@ -3304,9 +3304,9 @@ socks@^1.1.10:
     ip "^1.1.4"
     smart-buffer "^1.0.13"
 
-solc@0.4.18:
-  version "0.4.18"
-  resolved "https://registry.yarnpkg.com/solc/-/solc-0.4.18.tgz#83ac6d871dd16a9710e67dbb76dad7f614100702"
+solc@0.4.19:
+  version "0.4.19"
+  resolved "https://registry.yarnpkg.com/solc/-/solc-0.4.19.tgz#1af1c4c292a0365a6977d4cbe3fbee7139b4b561"
   dependencies:
     fs-extra "^0.30.0"
     memorystream "^0.3.1"
@@ -3663,13 +3663,13 @@ truffle-resolver@^4.0.1:
     truffle-expect "0.0.3"
     truffle-provisioner "^0.1.0"
 
-truffle@^4.0.4:
+"truffle@github:trufflesuite/truffle#4757c1":
   version "4.0.5"
-  resolved "https://registry.yarnpkg.com/truffle/-/truffle-4.0.5.tgz#1462635cd6dbb9746a1b49a2d3e6b9a7f9226b58"
+  resolved "https://codeload.github.com/trufflesuite/truffle/tar.gz/4757c1af1b51b83245a987d9b25743bbd90047ac"
   dependencies:
     mocha "^3.4.2"
     original-require "^1.0.1"
-    solc "0.4.18"
+    solc "0.4.19"
 
 tsort@0.0.1:
   version "0.0.1"
