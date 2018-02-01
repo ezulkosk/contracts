@@ -1,6 +1,5 @@
 pragma solidity ^0.4.11;
 
-import 'zeppelin-solidity/contracts/token/ERC20/TokenVesting.sol';
 import './InkProtocolCore.sol';
 
 /// @title Ink Protocol: Decentralized reputation and payments for peer-to-peer marketplaces.
@@ -19,14 +18,10 @@ contract InkProtocol is InkProtocolCore {
     uint256 allocated;
 
     // Allocate 32% to vesting contract for Ink distribution/network incentives.
-    // Vesting starts Feb 28, 2018 @ 00:00:00 GMT
-    TokenVesting vesting1 = new TokenVesting(__address1__, 1519776000, 0, 3 years, false);
     balances[vesting1] = 160000000000000000000000000;
     allocated = allocated.add(balanceOf(vesting1));
 
     // Allocate 32% to vesting contract for Listia Inc.
-    // Vesting starts Feb 28, 2018 @ 00:00:00 GMT
-    TokenVesting vesting2 = new TokenVesting(__address2__, 1519776000, 0, 3 years, false);
     balances[vesting2] = 160000000000000000000000000;
     allocated = allocated.add(balanceOf(vesting2));
 
