@@ -23,6 +23,7 @@ contract("InkProtocol", (accounts) => {
       await protocol.transfer(sender, amount)
       await protocol.approve(agent, amount, { from: sender })
 
+      assert.equal(await $util.getBalance(sender, protocol), amount)
       await $util.assertVMExceptionAsync(protocol.transferFrom(sender, recipient, amount, { from: agent }))
     })
 
