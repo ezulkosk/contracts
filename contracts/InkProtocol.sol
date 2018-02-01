@@ -38,7 +38,7 @@ contract InkProtocol is InkProtocolCore {
     balances[__address4__] = 130374026302105000000000000;
     allocated = allocated.add(balanceOf(__address4__));
 
-    // Burn unsold tokens due to token sale hardcap.
+    // Burn unsold tokens due to token sale hard cap.
     uint256 burnedSupply = 19625973697895500000000000;
     totalSupply_ = totalSupply_.sub(burnedSupply);
 
