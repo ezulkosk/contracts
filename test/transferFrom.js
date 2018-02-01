@@ -3,28 +3,34 @@ const InkProtocol = artifacts.require("./mocks/InkProtocolMock.sol")
 
 contract("InkProtocol", (accounts) => {
   let protocol
-  let sender = accounts[1]
-  let recipient = accounts[2]
-  let agent = accounts[3]
+  let sender
+  let recipient
+  let agent
+  let amount
 
   beforeEach(async () => {
     protocol = await InkProtocol.new()
+    sender = accounts[1]
+    recipient = accounts[2]
+    agent = accounts[3]
+    amount = 10
   })
 
   describe("#transferFrom()", () => {
     it("fails when recipient is the protocol", async () => {
-      await $util.assertVMExceptionAsync(protocol.transferFrom(sender, protocol.address, 1))
+      recipient = protocol.address
+
+      await $util.assertVMExceptionAsync(protocol.transferFrom(sender, recipient, amount))
     })
 
     it("succeeds when recipient is another address", async () => {
-      let amount = 10;
-      await protocol.transfer(sender, 20)
-      let senderBalance = await $util.getBalance(sender, protocol)
+      await protocol.transfer(sender, amount)
+      let originalSenderBalance = await $util.getBalance(sender, protocol)
 
       await protocol.approve(agent, amount, { from: sender })
       await protocol.transferFrom(sender, recipient, amount, { from: agent })
 
-      assert.equal(await $util.getBalance(sender, protocol), senderBalance - amount)
+      assert.equal(await $util.getBalance(sender, protocol), originalSenderBalance - amount)
       assert.equal(await $util.getBalance(recipient, protocol), amount)
     })
   })
