@@ -18,9 +18,9 @@ Ink Protocol solves some of the most common and difficult issues with buying and
 - Decentralized feedback
 - Decentralized reputation
 - Decentralized escrow with third party dispute resolution
-- [Mediation](https://github.com/InkProtocol/ink-protocol/wiki/Mediation) and Transaction Fees
-- [Linked Addresses](https://github.com/InkProtocol/ink-protocol/wiki/Linked-Addresses)
-- [Owners](https://github.com/InkProtocol/ink-protocol/wiki/Owners)
+- [Mediation](https://github.com/InkProtocol/contracts/wiki/Mediation) and Transaction Fees
+- [Linked Addresses](https://github.com/InkProtocol/contracts/wiki/Linked-Addresses)
+- [Owners](https://github.com/InkProtocol/contracts/wiki/Owners)
 
 ## Ethereum Main Network
 
@@ -32,4 +32,4 @@ Ink Protocol is deployed to the Rinkby Test Network. You may test your interacti
 
 **Contract Address:** [`0xB03b5ad79e59dc60974021059C85D3BC397C8EDa`](https://rinkeby.etherscan.io/address/0xb03b5ad79e59dc60974021059c85d3bc397c8eda)
 
-Please read our [wiki page](https://github.com/InkProtocol/ink-protocol/wiki/Rinkeby-Test-Network) for more details.
+Please read our [wiki page](https://github.com/InkProtocol/contracts/wiki/Rinkeby-Test-Network) for more details.
