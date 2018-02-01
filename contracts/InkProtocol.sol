@@ -18,12 +18,12 @@ contract InkProtocol is InkProtocolCore {
     uint256 allocated;
 
     // Allocate 32% to vesting contract for Ink distribution/network incentives.
-    balances[vesting1] = 160000000000000000000000000;
-    allocated = allocated.add(balanceOf(vesting1));
+    balances[__address1__] = 160000000000000000000000000;
+    allocated = allocated.add(balanceOf(__address1__));
 
     // Allocate 32% to vesting contract for Listia Inc.
-    balances[vesting2] = 160000000000000000000000000;
-    allocated = allocated.add(balanceOf(vesting2));
+    balances[__address2__] = 160000000000000000000000000;
+    allocated = allocated.add(balanceOf(__address2__));
 
     // Allocate 6% to wallet for Listia Marketplace credit conversion.
     balances[__address3__] = 30000000000000000000000000;
