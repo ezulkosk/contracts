@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/InkProtocol/contracts.svg?branch=master)](https://travis-ci.org/InkProtocol/contracts)
+
 # <img src="https://raw.githubusercontent.com/InkProtocol/press-kit/master/images/logo.png" height="60">
 
 #### Decentralized reputation and payments for peer-to-peer marketplaces.
