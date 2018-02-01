@@ -20,17 +20,19 @@ contract("InkProtocol", (accounts) => {
     it("fails when recipient is the protocol", async () => {
       recipient = protocol.address
 
-      await $util.assertVMExceptionAsync(protocol.transferFrom(sender, recipient, amount))
+      await protocol.transfer(sender, amount)
+      await protocol.approve(agent, amount, { from: sender })
+
+      await $util.assertVMExceptionAsync(protocol.transferFrom(sender, recipient, amount, { from: agent }))
     })
 
     it("succeeds when recipient is another address", async () => {
       await protocol.transfer(sender, amount)
-      let originalSenderBalance = await $util.getBalance(sender, protocol)
-
       await protocol.approve(agent, amount, { from: sender })
+
       await protocol.transferFrom(sender, recipient, amount, { from: agent })
 
-      assert.equal(await $util.getBalance(sender, protocol), originalSenderBalance - amount)
+      assert.equal(await $util.getBalance(sender, protocol), 0)
       assert.equal(await $util.getBalance(recipient, protocol), amount)
     })
   })
