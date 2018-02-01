@@ -25,6 +25,7 @@ contract("InkProtocol", (accounts) => {
 
       await $util.assertVMExceptionAsync(protocol.transferFrom(sender, recipient, amount, { from: agent }))
       assert.equal(await $util.getBalance(sender, protocol), amount)
+      assert.equal(await $util.getBalance(recipient, protocol), 0)
     })
 
     it("succeeds when recipient is another address", async () => {
