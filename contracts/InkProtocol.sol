@@ -35,7 +35,7 @@ contract InkProtocol is InkProtocolCore {
     allocated = allocated.add(balanceOf(__address3__));
 
     // Allocate to wallet for token sale distribution.
-    balances[__address4__] = 130374026302105000000000000;
+    balances[__address4__] = 130374026302104500000000000;
     allocated = allocated.add(balanceOf(__address4__));
 
     // Burn unsold tokens due to token sale hard cap.
